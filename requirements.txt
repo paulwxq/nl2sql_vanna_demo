@@ -1,0 +1,29 @@
+# Core Framework
+python-dotenv==1.0.0
+flask==3.0.3
+flask-cors==4.0.0
+
+# Database & ORM
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+
+# Vector DB
+chromadb==0.4.18
+
+# LLM/NL2SQL Core
+langchain==0.0.292
+langchain-community==0.0.13
+vanna==0.7.9
+pydantic==2.4.2
+
+# UI
+streamlit==1.28.0
+
+# Testing
+pytest==7.4.3
+pytest-mock==3.12.0
+
+# Dev Tools
+jupyter==1.0.0
+black==23.10.1
+isort==5.12.0
