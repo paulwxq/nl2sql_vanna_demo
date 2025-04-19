@@ -156,3 +156,18 @@ class DatabaseConnection:
         except Exception as e:
             logger.error(f"获取数据库结构失败: {str(e)}")
             raise
+
+    def get_connection_info(self) -> Dict[str, Any]:
+        """
+        获取数据库连接信息
+        
+        Returns:
+            Dict[str, Any]: 数据库连接信息
+        """
+        return {
+            'host': self.config['host'],
+            'port': self.config['port'],
+            'dbname': self.config['dbname'],
+            'user': self.config['user'],
+            'password': self.config['password']
+        }

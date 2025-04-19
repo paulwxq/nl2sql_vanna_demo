@@ -19,7 +19,7 @@ DATABASE_CONFIG = {
 
 # LLM配置
 LLM_CONFIG = {
-    'provider': os.getenv('LLM_PROVIDER', 'deepseek'),  # 'deepseek' 或 'qwen'
+    'provider': 'deepseek',  # 硬编码提供商为deepseek
     'api_uri': os.getenv('LLM_API_URI', ''),
     'api_key': os.getenv('LLM_API_KEY', ''),
     'model': os.getenv('LLM_MODEL', ''),  # 具体的模型名称
@@ -41,6 +41,9 @@ VANNA_CONFIG = {
     'persist_directory': os.getenv('VANNA_PERSIST_DIR', 'data/vanna_store'),
     'schema': os.getenv('VANNA_SCHEMA', 'nl2vec'),  # 使用nl2vec模式
     'db_impl': os.getenv('VANNA_DB_IMPL', 'pgvector'),  # 使用pgvector
+    'api_key': os.getenv('VANNA_API_KEY', 'demo-api-key'),  # Vanna API密钥
+    'model_name': os.getenv('VANNA_MODEL_NAME', 'demo-model'),  # Vanna模型名称
+    'email': os.getenv('VANNA_EMAIL', 'demo@example.com'),  # Vanna账户邮箱
     'connection_string': None,  # 将在下面动态构建
 }
 

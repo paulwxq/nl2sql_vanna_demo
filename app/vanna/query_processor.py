@@ -39,7 +39,7 @@ class QueryProcessor:
         
         try:
             # 使用Vanna生成SQL
-            sql = self.vanna.ask(question=question)
+            sql = self.vanna.generate_sql(question=question)
             
             if not sql:
                 logger.warning(f"未能为问题生成SQL: {question}")
@@ -94,7 +94,7 @@ class QueryProcessor:
             
         try:
             # 训练问题-SQL对
-            self.vanna.train(question=question, sql=sql)
+            self.vanna.add_sql(question=question, sql=sql)
             logger.info(f"成功训练问题-SQL对: {question} -> {sql}")
             return True
         except Exception as e:

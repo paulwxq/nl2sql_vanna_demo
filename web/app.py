@@ -9,7 +9,7 @@ import os
 # 添加项目根目录到系统路径
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
 from app.db.connection import DatabaseConnection
@@ -34,6 +34,11 @@ vanna_instance = vanna_setup.initialize_vanna()
 vanna_setup.connect_to_database(db_connection)
 query_processor = QueryProcessor(vanna_instance, db_connection)
 trainer = VannaTrainer(vanna_instance)
+
+@app.route('/')
+def index():
+    """提供主页"""
+    return render_template('index.html')
 
 @app.route('/api/query', methods=['POST'])
 def handle_query():

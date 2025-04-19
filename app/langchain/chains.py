@@ -5,10 +5,11 @@
 import logging
 from typing import Dict, Any, List, Optional
 
+from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 from langchain.chains import LLMChain
-from langchain.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate
-from langchain.chat_models.base import BaseChatModel
-from langchain.callbacks.base import CallbackManager
+from langchain_community.chat_models import ChatOpenAI
+from langchain_core.callbacks import CallbackManager
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,7 @@ class SQL2NaturalLanguageChain:
     SQL转自然语言链，用于解释SQL查询
     """
     
-    def __init__(self, llm: BaseChatModel):
+    def __init__(self, llm: ChatOpenAI):
         """
         初始化SQL解释链
         
@@ -74,7 +75,7 @@ class NaturalLanguageRefinementChain:
     自然语言优化链，用于优化用户的查询
     """
     
-    def __init__(self, llm: BaseChatModel):
+    def __init__(self, llm: ChatOpenAI):
         """
         初始化查询优化链
         

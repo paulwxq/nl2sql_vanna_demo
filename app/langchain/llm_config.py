@@ -5,9 +5,10 @@ LLM模型配置模块，用于初始化和配置LLM模型
 import logging
 from typing import Dict, Any, Optional, List
 
-from langchain.chat_models.base import BaseChatModel
-from langchain.schema import SystemMessage
-from langchain.embeddings.base import Embeddings
+#from langchain_community.chat_models import ChatOpenAI
+from langchain_core.messages import SystemMessage
+from langchain_core.embeddings import Embeddings
+from langchain_openai import ChatOpenAI
 
 from app.config import LLM_CONFIG, EMBEDDING_CONFIG
 
@@ -19,7 +20,7 @@ class LLMFactory:
     """
     
     @staticmethod
-    def create_llm(config: Dict[str, Any] = None) -> BaseChatModel:
+    def create_llm(config: Dict[str, Any] = None) -> ChatOpenAI:
         """
         创建LLM模型实例
         
@@ -27,7 +28,7 @@ class LLMFactory:
             config: LLM配置
             
         Returns:
-            BaseChatModel: LangChain LLM模型实例
+            ChatOpenAI: LangChain LLM模型实例
         """
         config = config or LLM_CONFIG
         provider = config.get('provider', 'deepseek').lower()
@@ -40,7 +41,7 @@ class LLMFactory:
             raise ValueError(f"不支持的LLM提供商: {provider}")
     
     @staticmethod
-    def _create_deepseek_llm(config: Dict[str, Any]) -> BaseChatModel:
+    def _create_deepseek_llm(config: Dict[str, Any]) -> ChatOpenAI:
         """
         创建DeepSeek LLM实例
         
@@ -48,30 +49,26 @@ class LLMFactory:
             config: LLM配置
             
         Returns:
-            BaseChatModel: DeepSeek LLM实例
+            ChatOpenAI: DeepSeek LLM实例
         """
-        from langchain.chat_models import ChatOpenAI
+        # 获取配置参数
+        model_name = config.get('model', 'deepseek-chat')
+        api_base = config.get('api_uri', '')
+        api_key = config.get('api_key', '')
+        temperature = config.get('temperature', 0.1)
+        max_tokens = config.get('max_tokens', 1024)
         
         # 创建自定义DeepSeek适配器
-        class DeepSeekAdapter(ChatOpenAI):
-            def __init__(self, **kwargs):
-                super().__init__(**kwargs)
-                self.model_name = config.get('model', 'deepseek-chat')
-                self.openai_api_base = config.get('api_uri')
-                self.openai_api_key = config.get('api_key')
-                self.temperature = config.get('temperature', 0.1)
-                self.max_tokens = config.get('max_tokens', 1024)
-                
-                # 设置系统提示
-                self.system_message = SystemMessage(content=(
-                    "你是一个专业的SQL查询助手，能够根据自然语言生成准确的SQL查询。"
-                    "请确保生成的SQL查询是安全的，并且只包含SELECT操作。"
-                ))
-        
-        return DeepSeekAdapter()
+        return ChatOpenAI(
+            model_name=model_name,
+            openai_api_base=api_base,
+            openai_api_key=api_key,
+            temperature=temperature,
+            max_tokens=max_tokens
+        )
     
     @staticmethod
-    def _create_qwen_llm(config: Dict[str, Any]) -> BaseChatModel:
+    def _create_qwen_llm(config: Dict[str, Any]) -> ChatOpenAI:
         """
         创建Qwen LLM实例
         
@@ -79,27 +76,23 @@ class LLMFactory:
             config: LLM配置
             
         Returns:
-            BaseChatModel: Qwen LLM实例
+            ChatOpenAI: Qwen LLM实例
         """
-        from langchain.chat_models import ChatOpenAI
+        # 获取配置参数
+        model_name = config.get('model', 'qwen')
+        api_base = config.get('api_uri', '')
+        api_key = config.get('api_key', '')
+        temperature = config.get('temperature', 0.1)
+        max_tokens = config.get('max_tokens', 1024)
         
         # 创建自定义Qwen适配器
-        class QwenAdapter(ChatOpenAI):
-            def __init__(self, **kwargs):
-                super().__init__(**kwargs)
-                self.model_name = config.get('model', 'qwen')
-                self.openai_api_base = config.get('api_uri')
-                self.openai_api_key = config.get('api_key')
-                self.temperature = config.get('temperature', 0.1)
-                self.max_tokens = config.get('max_tokens', 1024)
-                
-                # 设置系统提示
-                self.system_message = SystemMessage(content=(
-                    "你是一个专业的SQL查询助手，能够根据自然语言生成准确的SQL查询。"
-                    "请确保生成的SQL查询是安全的，并且只包含SELECT操作。"
-                ))
-        
-        return QwenAdapter()
+        return ChatOpenAI(
+            model_name=model_name,
+            openai_api_base=api_base,
+            openai_api_key=api_key,
+            temperature=temperature,
+            max_tokens=max_tokens
+        )
 
 class EmbeddingFactory:
     """
@@ -136,7 +129,7 @@ class EmbeddingFactory:
         Returns:
             Embeddings: 阿里云Embedding实例
         """
-        from langchain.embeddings.base import Embeddings
+        from langchain_core.embeddings import Embeddings
         import requests
         
         # 创建自定义阿里云Embedding适配器
