@@ -37,8 +37,11 @@ EMBEDDING_CONFIG = {
 
 # Vanna配置
 VANNA_CONFIG = {
-    'collection_name': os.getenv('VANNA_COLLECTION', 'nl2sql_demo'),
+    'collection_name': os.getenv('VANNA_COLLECTION', 'works_dw_vectors'),
     'persist_directory': os.getenv('VANNA_PERSIST_DIR', 'data/vanna_store'),
+    'schema': os.getenv('VANNA_SCHEMA', 'nl2vec'),  # 使用nl2vec模式
+    'db_impl': os.getenv('VANNA_DB_IMPL', 'pgvector'),  # 使用pgvector
+    'connection_string': None,  # 将在下面动态构建
 }
 
 # 日志配置
@@ -52,4 +55,16 @@ LOGGING_CONFIG = {
 SECURITY_CONFIG = {
     'allowed_operations': ['SELECT'],  # 只允许SELECT操作，防止潜在的危险操作
     'max_query_execution_time': int(os.getenv('MAX_QUERY_TIME', '30')),  # 最大查询执行时间（秒）
+}
+
+# 向量存储配置
+VECTOR_STORAGE_CONFIG = {
+    'schema': 'nl2vec',
+    'table_prefix': 'vanna_'
+}
+
+# 应用程序存储配置
+APP_STORAGE_CONFIG = {
+    'schema': 'nl2sql',
+    'table_prefix': 'app_'
 }

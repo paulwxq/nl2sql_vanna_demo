@@ -3,6 +3,12 @@
 Web应用入口
 """
 import logging
+import sys
+import os
+
+# 添加项目根目录到系统路径
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
