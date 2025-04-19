@@ -41,10 +41,6 @@ VANNA_CONFIG = {
     'persist_directory': os.getenv('VANNA_PERSIST_DIR', 'data/vanna_store'),
     'schema': os.getenv('VANNA_SCHEMA', 'nl2vec'),  # 使用nl2vec模式
     'db_impl': os.getenv('VANNA_DB_IMPL', 'pgvector'),  # 使用pgvector
-    'api_key': os.getenv('VANNA_API_KEY', 'demo-api-key'),  # Vanna API密钥
-    'model_name': os.getenv('VANNA_MODEL_NAME', 'demo-model'),  # Vanna模型名称
-    'email': os.getenv('VANNA_EMAIL', 'demo@example.com'),  # Vanna账户邮箱
-    'connection_string': None,  # 将在下面动态构建
 }
 
 # 日志配置
