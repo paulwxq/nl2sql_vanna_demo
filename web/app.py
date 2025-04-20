@@ -26,7 +26,7 @@ app = Flask(__name__)
 CORS(app)  # 启用CORS
 
 # 初始化组件
-db_connection = DatabaseConnection()
+db_connection = DatabaseConnection()  # 尝试连接数据库，如果失败则抛出异常并退出
 llm_model = LLMFactory.create_llm()
 embedding_model = EmbeddingFactory.create_embedding()
 vanna_setup = VannaSetup(llm_model, embedding_model)

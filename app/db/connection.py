@@ -42,9 +42,15 @@ class DatabaseConnection:
                 pool_timeout=30,
                 pool_recycle=1800,
             )
+            
+            # 简单测试连接是否成功
+            with self._engine.connect() as conn:
+                conn.execute(text("SELECT 1"))
+                
             logger.info(f"成功连接到数据库 {self.config['dbname']} at {self.config['host']}:{self.config['port']}")
         except Exception as e:
             logger.error(f"数据库连接失败: {str(e)}")
+            logger.error("请确保数据库已经存在并且表结构已经创建")
             raise
     
     @contextmanager
