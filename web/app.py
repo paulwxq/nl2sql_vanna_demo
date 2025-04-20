@@ -26,12 +26,12 @@ app = Flask(__name__)
 CORS(app)  # 启用CORS
 
 # 初始化组件
+logger.info("初始化NL2SQL Demo应用")
 db_connection = DatabaseConnection()  # 尝试连接数据库，如果失败则抛出异常并退出
 llm_model = LLMFactory.create_llm()
 embedding_model = EmbeddingFactory.create_embedding()
 vanna_setup = VannaSetup(llm_model, embedding_model)
-vanna_instance = vanna_setup.initialize_vanna()
-vanna_setup.connect_to_database(db_connection)
+vanna_instance = vanna_setup.initialize_vanna(db_connection=db_connection)
 query_processor = QueryProcessor(vanna_instance, db_connection)
 trainer = VannaTrainer(vanna_instance)
 

@@ -1,6 +1,8 @@
 # scripts/setup_db.py
 """
 数据库设置脚本
+不建议使用，当works_dw库和表不存在时，可以它初始化数据。
+它这是只是产生的随机数，我们有完整的csv数据集，所以，并不会使用它加载数据。
 """
 import os
 import sys

@@ -27,7 +27,6 @@ def generate_simple_queries():
             "sql": "SELECT * FROM Customers"
         },
         {
-            # scripts/generate_training_data.py (继续)
             "question": "显示客户总数",
             "sql": "SELECT COUNT(*) FROM Customers"
         },
