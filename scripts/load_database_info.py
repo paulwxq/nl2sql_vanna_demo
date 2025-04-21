@@ -16,6 +16,7 @@ from app.db.connection import DatabaseConnection
 from app.vanna.setup import VannaSetup
 from app.langchain.llm_config import LLMFactory, EmbeddingFactory
 
+
 def add_ddl_from_file(vanna_instance, file_path):
     """从文件添加DDL"""
     try:
